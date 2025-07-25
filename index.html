@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rizz the Rizzler</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 2em;
+    }
+    img {
+      max-width: 200px;
+      border-radius: 10px;
+      margin-bottom: 1em;
+    }
+    .question {
+      margin: 2em 0;
+    }
+    .answers button {
+      display: block;
+      margin: 0.5em auto;
+      padding: 0.5em 1em;
+      font-size: 1em;
+      background: #ff4b7d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .ending {
+      display: none;
+      font-size: 1.5em;
+      margin-top: 2em;
+    }
+    .animate {
+      animation: bounce 0.6s infinite alternate;
+    }
+    @keyframes bounce {
+      from { transform: translateY(0); }
+      to { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <h1>💖 Rizz the Rizzler 💖</h1>
+  <img src="rizzler.png" id="rizzler" />
+  <div id="game"></div>
+  <div class="ending" id="ending"></div>
+
+  <script>
+    const questions = [
+      {
+        q: "Was sagt der Rizzler, wenn er dich sieht?",
+        a: ["Bro…", "Sheesh 👀", "Wo ist meine Brille?"],
+        correct: 1
+      },
+      {
+        q: "Was ist sein Lieblingsgetränk beim Date?",
+        a: ["Proteinshake", "Vanillelatte mit extra Rizz", "Leitungswasser, still"],
+        correct: 1
+      },
+      {
+        q: "Was ist sein geheimes Talent?",
+        a: ["Augenbrauen tanzen", "Reverse Psychology", "Mit dir flirten, obviously"],
+        correct: 2
+      },
+      {
+        q: "Was sagt er nach dem Date?",
+        a: ["Ciao Kakao", "Ich ruf dich maybe an", "Das war…rizzlich"],
+        correct: 2
+      },
+      {
+        q: "Was ist sein Kryptonit?",
+        a: ["Cringe Pickup Lines", "Intelligenz", "Leute ohne Rizz"],
+        correct: 2
+      }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const gameDiv = document.getElementById("game");
+    const ending = document.getElementById("ending");
+    const rizzlerImg = document.getElementById("rizzler");
+
+    function showQuestion() {
+      const q = questions[current];
+      gameDiv.innerHTML = `
+        <div class="question">
+          <h2>${q.q}</h2>
+          <div class="answers">
+            ${q.a.map((ans, i) => `<button onclick="answer(${i})">${ans}</button>`).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function answer(choice) {
+      if (choice === questions[current].correct) score++;
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        endGame();
+      }
+    }
+
+    function endGame() {
+      gameDiv.innerHTML = "";
+      rizzlerImg.classList.add("animate");
+
+      if (score === 5) {
+        ending.innerHTML = "💘 Du hast den Rizz-Gott erobert! 💘";
+      } else if (score >= 3) {
+        ending.innerHTML = "😏 Ganz ok gerizzt. Vielleicht ein Date?";
+      } else {
+        ending.innerHTML = "💔 Friendzoned. Versuch's nochmal.";
+      }
+      ending.style.display = "block";
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
